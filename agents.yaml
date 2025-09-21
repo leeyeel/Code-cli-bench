@@ -1,0 +1,27 @@
+# Example agents.yaml
+defaults:
+  env:
+    LOG_LEVEL: INFO
+  run:
+    output_dir: output
+    timeout: 0
+    glob: "*.txt"
+    recurse: 0
+
+agents:
+  pywen:
+    command: "pywen"
+    args: ""
+    model: "gpt-5-thinking"
+    env:
+      OPENAI_API_KEY: "env:OPENAI_API_KEY"
+      OPENAI_BASE_URL: "${OPENAI_BASE_URL:-https://api.openai.com/v1}"
+      PYWEN_EXTRA: "foo"
+
+  claude:
+    command: "claude"
+    args: ""
+    model: "claude-3-5-sonnet-20241022"
+    env:
+      ANTHROPIC_API_KEY: "env:ANTHROPIC_API_KEY"
+      ANTHROPIC_BASE_URL: "${ANTHROPIC_BASE_URL:-https://api.anthropic.com}"
