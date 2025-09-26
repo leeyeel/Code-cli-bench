@@ -96,7 +96,7 @@ PYWEN_PANE="${PYWEN_PANE:-$(tmux list-panes -t "$SESSION" -F '#{pane_id}' | sed 
 ready_pane() {
   local pane="$1"
   tmux if -t "$pane" -F '#{pane_in_mode}' 'send-keys -t "#{pane_id}" -X cancel' ''
-  tmux send-keys -t "$pane" C-c 2>/dev/null || true
+  tmux send-keys -t "$pane" C-m
   sleep "${READY_DELAY:-0.5}"
 }
 

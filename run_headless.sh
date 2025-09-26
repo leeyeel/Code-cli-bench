@@ -41,7 +41,7 @@ prefix_pipe() {
 }
 
 shopt -s nullglob
-tests=("$TEST_DIR"/*.txt)
+tests=("$TEST_DIR"/*.md)
 if (( ${#tests[@]} == 0 )); then
   echo "No *.txt found in $TEST_DIR"
   exit 1
