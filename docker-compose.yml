@@ -1,6 +1,6 @@
 # 共享配置模板
 x-agent-bench-common: &agent-bench-common
-  image: ${IMAGE_NAME:-agent-bench:local}
+  image: ${IMAGE_NAME:-code-cli-bench:local}
   environment:
     - TZ=Asia/Shanghai
     - PYTHONPATH=/workspace/Pywen
@@ -13,18 +13,18 @@ x-agent-bench-common: &agent-bench-common
     - PYWEN_TRAJECTORY_DIR=${PYWEN_TRAJECTORY_DIR:-}
     - CLAUDE_CODE_THEME=dark
   volumes:
-    - ./tests:/workspace/agent-bench/tests
-    - ./output:/workspace/agent-bench/output
+    - ./tests:/workspace/Code-cli-bench/tests
+    - ./output:/workspace/Code-cli-bench/output
     - agent-bench-data:/workspace/data
-  working_dir: /workspace/agent-bench
+  working_dir: /workspace/Code-cli-bench
   tty: true
   stdin_open: true
 
 services:
   bench-image:
     build: .
-    image: ${IMAGE_NAME:-agent-bench:local}
-    command: ["bash", "-lc", "echo Built ${IMAGE_NAME:-agent-bench:local}"]
+    image: ${IMAGE_NAME:-code-cli-bench:local}
+    command: ["bash", "-lc", "echo Built ${IMAGE_NAME:-code-cli-bench:local}"]
 
   bench-headless:
     <<: *agent-bench-common

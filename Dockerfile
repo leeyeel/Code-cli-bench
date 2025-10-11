@@ -41,19 +41,21 @@ RUN chmod 755 /usr/local/lib/node_modules/@anthropic-ai/claude-code/cli.js
 USER node
 WORKDIR /workspace
 
-COPY --chown=node:node . /workspace/agent-bench/
-RUN chmod +x /workspace/agent-bench/*.sh
+COPY --chown=node:node . /workspace/Code-cli-bench/
+RUN chmod +x /workspace/Code-cli-bench/*.sh
 
 COPY --chown=node:node claude/claude.json /home/node/.claude.json
 COPY --chown=node:node claude/setting/settings.json /home/node/.claude/settings.json
-RUN chmod 755 -R /workspace/agent-bench/claude/script/
+RUN chmod 755 -R /workspace/Code-cli-bench/claude/script/
 
 RUN git clone https://github.com/leeyeel/Pywen.git \
  && cd Pywen \
- && git checkout multi-agent \
+ && git checkout feat/config \
  && uv venv \
  && uv sync --all-extras \
  && uv pip install -e .
 
-ENV PATH="/workspace/Pywen/.venv/bin:${PATH}"
+COPY --chown=node:node pywen/pywen_hooks.json /home/node/.pywen/pywen_hooks.json
+RUN chmod 755 -R /workspace/Code-cli-bench/pywen/script/
 
+ENV PATH="/workspace/Pywen/.venv/bin:${PATH}"

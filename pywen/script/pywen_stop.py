@@ -59,14 +59,6 @@ def write_done(case_id: str) -> str:
     """
     返回写入方式的描述：'fifo' 或 'file'
     """
-    if os.name != "posix":
-        try:
-            with open(FALLBACK_LOG, "a", encoding="utf-8") as w:
-                w.write(f"{case_id} DONE\n")
-            return "file"
-        except Exception:
-            return "file"
-
     try:
         if not FIFO_PATH.exists() or not FIFO_PATH.is_fifo():
             if FIFO_PATH.exists():
@@ -81,7 +73,6 @@ def write_done(case_id: str) -> str:
             return "file"
 
     try:
-        import errno
         fd = os.open(str(FIFO_PATH), os.O_WRONLY | os.O_NONBLOCK)
         try:
             os.write(fd, f"{case_id} DONE\n".encode("utf-8"))
